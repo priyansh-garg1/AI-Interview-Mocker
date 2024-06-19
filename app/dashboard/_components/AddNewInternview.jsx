@@ -15,9 +15,10 @@ import { chatSession } from "@/utils/GeminiAIModal";
 import { LoaderCircle } from "lucide-react";
 import { db } from "@/utils/db";
 import { MockInterview } from "@/utils/schema";
-import {v4 as uuid} from 'uuid'
+import { v4 as uuid } from "uuid";
 import { useUser } from "@clerk/nextjs";
 import moment from "moment";
+import { useRouter } from "next/navigation";
 
 function AddNewInternview() {
   const [openDialog, setOpenDialog] = useState(false);
@@ -25,8 +26,9 @@ function AddNewInternview() {
   const [jobDesc, setJobDesc] = useState();
   const [jobExperience, setJobExperience] = useState();
   const [loading, setLoading] = useState(false);
-  const [jsonResponse, setJsonResponse] = useState([])
-  const {user} = useUser();
+  const [jsonResponse, setJsonResponse] = useState([]);
+  const router = useRouter();
+  const { user } = useUser();
 
   const onSubmit = async (e) => {
     setLoading(true);
@@ -40,27 +42,39 @@ function AddNewInternview() {
       jobExperience +
       " , Depends on Job Positon, Job Description & Years of Experience give us " +
       process.env.NEXT_PUBLIC_INTERVIEW_QUESTION_COUNT +
-      " Interview questions and Answer in JSON format, Give us question and answer field on JSON";
+      " Interview questions and Answer in JSON format, Give us question and answer field on JSON fromat only not other text than JSON";
 
     const result = await chatSession.sendMessage(InputPrompt);
     const MockJsonResp = result.response
       .text()
       .replace("```json", "")
       .replace("```", "");
+    console.log(MockJsonResp);
     console.log(JSON.parse(MockJsonResp));
     setJsonResponse(MockJsonResp);
 
-    const resp = await db.insert(MockInterview).values({
-      mockId: uuid(),
-      jsonMockResp:MockJsonResp,
-      jobPosition: jobPositon,
-      jobDesc: jobDesc,
-      jobExperience: jobExperience,
-      createdBy: user?.primaryEmailAddress?.emailAddress,
-      createdAt: moment().format("DD-MM-yyyy"),
-    }).returning({mockId:MockInterview.mockId});
+    if (MockJsonResp) {
+      const resp = await db
+        .insert(MockInterview)
+        .values({
+          mockId: uuid(),
+          jsonMockResp: MockJsonResp,
+          jobPosition: jobPositon,
+          jobDesc: jobDesc,
+          jobExperience: jobExperience,
+          createdBy: user?.primaryEmailAddress?.emailAddress,
+          createdAt: moment().format("DD-MM-yyyy"),
+        })
+        .returning({ mockId: MockInterview.mockId });
+        console.log("Inseted ID:", resp);
+        if(resp){
+          setOpenDialog(false);
+          router.push("/dashboard/interview/"+resp[0]?.mockId);
+        }
+    } else {
+      console.log("ERROR");
+    }
 
-    console.log("Inseted DB:",resp);
 
     setLoading(false);
   };
@@ -73,7 +87,6 @@ function AddNewInternview() {
         <h2 className="font-bold text-lg text-center">+ Add New</h2>
       </div>
       <Dialog open={openDialog}>
-        <DialogTrigger>Open</DialogTrigger>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle className="font-bold text-2xl">
@@ -127,8 +140,8 @@ function AddNewInternview() {
                     {" "}
                     {loading ? (
                       <>
-                        <LoaderCircle className="animate-spin" />
-                        {" "}Generating from AI
+                        <LoaderCircle className="animate-spin" /> Generating
+                        from AI
                       </>
                     ) : (
                       "Start Interview"
