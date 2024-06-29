@@ -1,161 +1,142 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { UserButton, useUser } from "@clerk/nextjs";
-import { LogInIcon, User } from "lucide-react";
+import { LogInIcon, User, UserIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 
-function Header() {
+const Header = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const path = usePathname();
-  const router = useRouter();
-  const { user } = useUser();
-  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   return (
-    <div className="flex p-4 px-8 justify-between w-fulkwl bg-gray-200 shadow-sm">
-      <Link href={"/"}>
-        <Image src={"/logo.svg"} width={60} height={50} alt="logo" />
-      </Link>
+    <header className="bg-gray-100 px-4 py-2 shadow-lg">
+      <div className="container mx-auto px-4 py-2 flex items-center justify-between">
+        {/* Logo */}
+        <div className="text-xl md:text-2xl font-bold text-gray-800">
+          <Link href="/"><Image src={'/logo.svg'} width={50} height={70}/></Link>
+        </div>
 
-      <ul
-        className={`md:flex gap-6 items-center w-full block flex-grow lg:flex lg:items-center lg:w-auto ${
-          isOpen ? "" : "hidden"
-        }`}
-      >
-        <div className="text-sm lg:flex-grow">
+        {/* Hamburger Menu for Mobile */}
+        <div className="md:hidden">
+          <button
+            onClick={toggleMobileMenu}
+            className="text-gray-600 hover:text-gray-800 focus:outline-none"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
+        </div>
+
+        {/* Navigation Links */}
+        <nav className="hidden md:flex space-x-7">
           <Link
-            href={"/dashboard"}
-            className={`block mt-4 lg:inline-block lg:mt-0 hover:text-primary hover:font-bold transition-all ${
+            href="/"
+            className={`  text-gray-600 hover:text-gray-800 ${
+              path == "/" && "text-primary font-bold cursor-pointer"
+            }`}
+          >
+            Home
+          </Link>
+          <Link
+            href="/dashboard"
+            className={`text-gray-600 hover:text-gray-800 ${
               path == "/dashboard" && "text-primary font-bold cursor-pointer"
             }`}
           >
             Dashboard
           </Link>
           <Link
-            className={`block mt-4 lg:inline-block lg:mt-0 hover:text-primary hover:font-bold transition-all ${
-              path == "/dashboard/questions" &&
-              "text-primary font-bold cursor-pointer"
+            href="/jobs"
+            className={`text-gray-600 hover:text-gray-800 ${
+              path == "/jobs" && "text-primary font-bold cursor-pointer"
             }`}
-            href={"/questions"}
           >
-            Questions
+            Jobs
           </Link>
-          <Link
-            className={`block mt-4 lg:inline-block lg:mt-0 hover:text-primary hover:font-bold transition-all ${
-              path == "/dashboard/upgrade" &&
-              "text-primary font-bold cursor-pointer"
-            }`}
-            href={"/upgrade"}
-          >
-            Upgrade
-          </Link>
-          <Link
-            className={`block mx-4 mt-4 lg:inline-block lg:mt-0 hover:text-primary hover:font-bold transition-all ${
-              path == "/dashboard/how" &&
-              "text-primary font-bold cursor-pointer"
-            }`}
-            href={"/reviews"}
-          >
-            Users Reviews
-          </Link>
-          <div className="flex items-center">
-            {user && <UserButton />}
-            {!user && (
-              <Link href={"/sign-in"}>
-                {" "}
-                <Button className="bg-blue-600 flex items-center gap-2">
-                  Login <LogInIcon />
-                </Button>{" "}
-              </Link>
-            )}
-          </div>
-        </div>
-      </ul>
+        </nav>
 
-      <div className="block lg:hidden">
-        <button
-          onClick={toggleMenu}
-          className="flex items-center px-3 py-2 border rounded text-blue-900 border-blue-400 hover:text-white hover:border-white"
-        >
-          <svg
-            className="fill-current h-3 w-3"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <title>Menu</title>
-            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-          </svg>
-        </button>
-      </div>
-    </div>
-  );
-}
-
-export default Header;
-
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  return (
-    <nav className="bg-blue-600 p-4">
-      <div className="flex items-center justify-between flex-wrap">
-        <div className="flex items-center flex-shrink-0 text-white mr-6">
-          <span className="font-semibold text-xl tracking-tight">
-            PrepBuddy
-          </span>
-        </div>
-        <div className="block lg:hidden">
-          <button
-            onClick={toggleMenu}
-            className="flex items-center px-3 py-2 border rounded text-blue-200 border-blue-400 hover:text-white hover:border-white"
-          >
-            <svg
-              className="fill-current h-3 w-3"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
+        {/* Login / User Icon */}
+        <div className="hidden md:block">
+          {isLoggedIn ? (
+            <img
+              src="path/to/user-icon.jpg" // replace with your user icon path
+              alt="User Icon"
+              className="w-8 h-8 rounded-full"
+            />
+          ) : (
+            <button
+              onClick={() => setIsLoggedIn(true)}
+              className="bg-blue-500 flex gap-2 text-white px-4 py-2 rounded-md hover:bg-blue-600"
             >
-              <title>Menu</title>
-              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-            </svg>
-          </button>
+              Login <LogInIcon />
+            </button>
+          )}
         </div>
-        <div
-          className={`w-full block flex-grow lg:flex lg:items-center lg:w-auto ${
-            isOpen ? "" : "hidden"
-          }`}
-        >
-          <div className="text-sm lg:flex-grow">
-            <a
-              href="#home"
-              className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4"
+      </div>
+
+      {/* Mobile Navigation */}
+      {isMobileMenuOpen && (
+        <nav className="md:hidden bg-gray-100 ">
+          <div className="flex flex-col space-y-2 p-4">
+            <Link
+              href="/"
+              className={`  text-gray-600 hover:text-gray-800 ${
+                path == "/" && "text-primary font-bold cursor-pointer"
+              }`}
             >
               Home
-            </a>
-            <a
-              href="#about"
-              className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4"
+            </Link>
+            <Link
+              href="/dashboard"
+              className={`text-gray-600 hover:text-gray-800 ${
+                path == "/dashboard" && "text-primary font-bold cursor-pointer"
+              }`}
             >
-              About
-            </a>
-            <a
-              href="#contact"
-              className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white"
+              Dashboard
+            </Link>
+            <Link
+              href="/jobs"
+              className={`text-gray-600 hover:text-gray-800 ${
+                path == "/jobs" && "text-primary font-bold cursor-pointer"
+              }`}
             >
-              Contact
-            </a>
+              Jobs
+            </Link>
+            {isLoggedIn ? (
+              <UserIcon />
+            ) : (
+              <button
+                onClick={() => setIsLoggedIn(true)}
+                className="bg-blue-500 text-white flex items-center gap-2 px-4 w-min py-2 rounded-md hover:bg-blue-600"
+              >
+                Login <LogInIcon />
+              </button>
+            )}
           </div>
-        </div>
-      </div>
-    </nav>
+        </nav>
+      )}
+    </header>
   );
 };
+
+export default Header;

@@ -1,7 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/Button";
-import { ArrowRightIcon } from "lucide-react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Header from "./dashboard/_components/Header";
 import Link from "next/link";
@@ -15,14 +13,14 @@ export default function Home() {
         <main className="container mx-auto flex-grow flex flex-col items-center p-4">
           <section className="text-center mt-8">
             <h2 className="text-3xl md:text-5xl font-bold mb-4 animate-fade-in-up">
-              Welcome to Preparation Buddy!
+              Welcome to <strong className="text-primary">Preparation Buddy!</strong>
             </h2>
             <p className="text-gray-700 mb-6 animate-fade-in-up delay-1">
               Our platform helps you practice mock interviews with the
               assistance of AI. <br /> You can also explore job opportunities to
               kickstart your career.
             </p>
-            <div className="flex justify-center space-x-4">
+            <div className="flex flex-col gap-4 md:flex-row justify-center space-x-4">
               <Link href={"dashboard"}>
                 <Button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transform transition-transform duration-300 hover:scale-105 animate-fade-in-up delay-2">
                   Get Started for Mock Interview
@@ -35,7 +33,7 @@ export default function Home() {
               </Link>
             </div>
           </section>
-          <section className="flex flex-col md:flex-row items-center justify-around w-full mt-12">
+          <section className="flex flex-col md:flex-row items-center justify-evenly w-full mt-12">
             <div className="md:w-1/3 bg-gray-200 p-4 shadow-md animate-fade-in-up">
               <img
                 src={
