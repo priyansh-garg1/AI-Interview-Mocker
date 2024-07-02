@@ -88,7 +88,7 @@ const Header = () => {
             <UserButton />
           ) : (
             <Link href={"/dashboard"}>
-              <Button className="bg-blue-500 flex gap-2 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+              <Button className="bg-primary flex gap-2 text-white px-4 py-2 rounded-md hover:bg-blue-600">
                 Login <LogInIcon />
               </Button>
             </Link>
@@ -136,7 +136,7 @@ const Header = () => {
               <UserButton />
             ) : (
               <Link href={"/dashboard"}>
-                <Button className="bg-blue-500 text-white flex items-center gap-2 px-4 w-min py-2 rounded-md hover:bg-blue-600">
+                <Button className="bg-primary text-white flex items-center gap-2 px-4 w-min py-2 rounded-md hover:bg-blue-600">
                   Login <LogInIcon />
                 </Button>
               </Link>
