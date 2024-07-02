@@ -126,6 +126,7 @@ export const Footer = () => {
                 <li className="mb-2">
                   <a href="#" className="hover:underline">
                     Privacy Policy
+
                   </a>
                 </li>
                 <li className="mb-2">
