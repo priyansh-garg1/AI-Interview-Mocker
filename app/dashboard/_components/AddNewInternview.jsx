@@ -82,9 +82,9 @@ function AddNewInternview() {
     <div>
       <div
         onClick={() => setOpenDialog(true)}
-        className="p-10 border rounded-lg bg-secondary hover:scale-105 hover:shadow-md cursor-pointer transition-all"
+        className="p-10 border rounded-lg bg-gray-300 text-black hover:scale-105 hover:shadow-md cursor-pointer transition-all"
       >
-        <h2 className="font-bold text-lg text-center">+ Add New</h2>
+        <h2 className="font-bold  text-lg text-center">+ Add New</h2>
       </div>
       <Dialog open={openDialog}>
         <DialogContent className="max-w-2xl">
@@ -128,7 +128,7 @@ function AddNewInternview() {
                     />
                   </div>
                 </div>
-                <div className="flex gap-5 justify-end">
+                <div className="flex gap-5 bg-secondary justify-end">
                   <Button
                     type="button"
                     variant={"ghost"}

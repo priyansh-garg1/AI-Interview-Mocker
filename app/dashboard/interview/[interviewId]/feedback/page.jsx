@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 
 function Feedback({ params }) {
   const [feedbackList, setFeedbackList] = useState([]);
+  const [rating,setRating] = useState(0);
   const router = useRouter();
   console.log(router);
   useEffect(() => {
@@ -27,6 +28,12 @@ function Feedback({ params }) {
       .orderBy(UserAnswer.id);
 
     console.log(result);
+    let rating = 0;
+    let lenght = result.length;
+    result.map((item,idx)=> rating+= item.rating);
+    let overallRating = rating/lenght;
+    console.log(overallRating);
+    setRating(overallRating);
     setFeedbackList(result);
   };
   return (
@@ -42,7 +49,7 @@ function Feedback({ params }) {
           </h2>
           <h2 className="text-2xl font-bold">Here is you interview feedback</h2>
           <h2 className="text-primary text-lgmy-3">
-            Your overall interview rating: <strong>7/10</strong>
+            Your overall interview rating: <strong>{rating}/10</strong>
           </h2>
 
           <h2 className="text-sm text-gray-500">

@@ -24,7 +24,7 @@ module.exports = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#4845D2",
+          DEFAULT: "#0045E4",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
@@ -71,6 +71,10 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      fontFamily:{
+        title: ["Poppins", "system-ui", "sans-serif"],
+        heading: ["Poppins", "system-ui", "sans-serif"],
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],

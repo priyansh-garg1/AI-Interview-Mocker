@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/Button";
 import { useRouter } from "next/navigation";
 import Header from "./dashboard/_components/Header";
 import Link from "next/link";
+import { ArrowUpRightFromSquare } from "lucide-react";
+import { PrcingPlans } from "./pricing/page";
 
 export default function Home() {
   const router = useRouter();
@@ -10,72 +12,74 @@ export default function Home() {
     <>
       <div className="min-h-screen bg-gray-100 flex flex-col justify-between">
         <Header />
-        <main className="container mx-auto flex-grow flex flex-col items-center p-4">
-          <section className="text-center mt-8">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 animate-fade-in-up">
-              Welcome to <strong className="text-primary">Preparation Buddy!</strong>
-            </h2>
-            <p className="text-gray-700 mb-6 animate-fade-in-up delay-1">
-              Our platform helps you practice mock interviews with the
-              assistance of AI. <br /> You can also explore job opportunities to
-              kickstart your career.
-            </p>
-            <div className="flex flex-col gap-4 md:flex-row justify-center space-x-4">
-              <Link href={"dashboard"}>
-                <Button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transform transition-transform duration-300 hover:scale-105 animate-fade-in-up delay-2">
-                  Get Started for Mock Interview
-                </Button>
-              </Link>
-              <Link href={"/jobs"}>
-                <Button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transform transition-transform duration-300 hover:scale-105 animate-fade-in-up delay-2">
-                  Find Jobs
-                </Button>
-              </Link>
-            </div>
-          </section>
-          <section className="flex flex-col md:flex-row items-center justify-evenly w-full mt-12">
-            <div className="md:w-1/3 bg-gray-200 p-4 shadow-md animate-fade-in-up">
-              <img
-                src={
-                  "https://media.istockphoto.com/id/1415930061/photo/men-at-interview.webp?b=1&s=170667a&w=0&k=20&c=3asxjarOHiH8szcMetvbl_mxmMLfZCPyaeQw-HapXOw="
-                }
-                alt="Mock Interview"
-                className="rounded-lg shadow-lg transform transition-transform duration-500 hover:scale-105"
-              />
-              <h3 className="text-2xl font-bold mt-4">
-                AI-Powered Mock Interviews
-              </h3>
-              <p className="text-gray-700 mt-2">
-                Get real-time feedback and improve your interview skills with
-                our AI-powered mock interviews.
-              </p>
-            </div>
-            <div className="md:w-1/3 shadow-md bg-gray-200 p-4 mt-8 md:mt-0 animate-fade-in-up delay-1">
-              <img
-                src={
-                  "https://media.istockphoto.com/id/536245001/photo/job-search-still-life-with-title-jobs.webp?b=1&s=170667a&w=0&k=20&c=Gxdw8aV0PvyRgSE1H1LCV45XqsuuVTp9ZtoZ1UTdfzI="
-                }
-                alt="Find Jobs"
-                className="rounded-lg shadow-lg transform transition-transform duration-500 hover:scale-105"
-              />
-              <h3 className="text-2xl font-bold mt-4">Find Your Dream Job</h3>
-              <p className="text-gray-700 mt-2">
-                Explore job opportunities and find the perfect fit for your
-                career goals.
-              </p>
-            </div>
-          </section>
-        </main>
+        <MainSection />
         <Testimonials />
+        <PrcingPlans />
         <Footer />
       </div>
     </>
   );
 }
 
+const MainSection = () => {
+  return (
+    <main className="container mx-auto flex-grow flex flex-col items-center p-4">
+      <section className="text-center mt-8">
+        <h2 className="text-3xl md:text-7xl font-bold mb-4 animate-fade-in-up">
+          Welcome to <p className="text-primary font-bold">Prep Buddy!</p>
+        </h2>
+        <p className="text-gray-700 mb-6 animate-fade-in-up delay-1">
+          Our platform helps you practice mock interviews with the assistance of
+          AI. <br /> You can also explore job opportunities to kickstart your
+          career.
+        </p>
+        <div className="flex flex-col  md:flex-row justify-center items-center">
+          <Link href={"dashboard"}>
+            <Button className="bg-primary flex gap-3 text-white py-2 px-4 rounded hover:bg-blue-600 transform transition-transform duration-300 hover:scale-105 animate-fade-in-up delay-2">
+              Get Started for Mock Interview <ArrowUpRightFromSquare />
+            </Button>
+          </Link>
+        </div>
+      </section>
+      <section className="flex flex-col md:flex-row items-center justify-evenly w-full mt-12">
+        <div className="md:w-1/3 bg-gray-200 p-4 shadow-md animate-fade-in-up">
+          <img
+            src={
+              "https://media.istockphoto.com/id/1415930061/photo/men-at-interview.webp?b=1&s=170667a&w=0&k=20&c=3asxjarOHiH8szcMetvbl_mxmMLfZCPyaeQw-HapXOw="
+            }
+            alt="Mock Interview"
+            className="rounded-lg shadow-lg transform transition-transform duration-500 hover:scale-105"
+          />
+          <h3 className="text-2xl font-bold mt-4">
+            AI-Powered Mock Interviews
+          </h3>
+          <p className="text-gray-700 mt-2">
+            Get real-time feedback and improve your interview skills with our
+            AI-powered mock interviews.
+          </p>
+        </div>
+        <div className="md:w-1/3 shadow-md bg-gray-200 p-4 mt-8 md:mt-0 animate-fade-in-up delay-1">
+          <img
+            src={
+              "https://media.istockphoto.com/id/536245001/photo/job-search-still-life-with-title-jobs.webp?b=1&s=170667a&w=0&k=20&c=Gxdw8aV0PvyRgSE1H1LCV45XqsuuVTp9ZtoZ1UTdfzI="
+            }
+            alt="Find Jobs"
+            className="rounded-lg shadow-lg transform transition-transform duration-500 hover:scale-105"
+          />
+          <h3 className="text-2xl font-bold mt-4">Find Your Dream Job</h3>
+          <p className="text-gray-700 mt-2">
+            Explore job opportunities and find the perfect fit for your career
+            goals.
+          </p>
+        </div>
+      </section>
+    </main>
+  );
+};
+
 export const Footer = () => {
   return (
-    <footer className="bg-blue-600 text-white py-8">
+    <footer className="bg-primary text-white py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 ">
         <div className="flex flex-wrap md:flex-nowrap justify-between">
           <div className="w-full md:w-1/3 mb-6 md:mb-0">
